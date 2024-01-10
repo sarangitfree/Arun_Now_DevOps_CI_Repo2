@@ -1,6 +1,6 @@
 # This workflow uses ServiceNow custom actions that are certified by ServiceNow.
 
-name: CI GitHub workflow
+name: ARTIFACT2 CI GitHub workflow
 
 on: workflow_dispatch
   # push:
