@@ -35,7 +35,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4.0.0
     - name: Run Tests with Maven
-      run: mvn -B test --file pom.xml --file artifact3/pom.xml
+      run: mvn -B test --file artifact3/pom.xml
   publish-job:
     runs-on: ubuntu-latest
     needs: test
