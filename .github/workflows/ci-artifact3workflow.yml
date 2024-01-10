@@ -52,3 +52,51 @@ jobs:
       with:
         name: Package
         path: staging    
+  registerartifact:
+    name: Register Artifact
+    needs: publish-job
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.0.0
+    - name: Extract Version
+      run: |
+          version=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' artifact3/pom.xml  | head -1)
+          echo " Version extrated from pom.xml: $version"
+          name=$(sed -n 's,.*<artifactId>\(.*\)</artifactId.*,\1,p' artifact3/pom.xml  | head -1)
+          echo " artifactid extrated from pom.xml: $name"
+          echo "artifactid=$(echo $name)"  >> "$GITHUB_ENV"
+          echo "pomversion=$(echo $version)" >> "$GITHUB_ENV"
+          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+          echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
+          sha=$(git rev-parse --short "$GITHUB_SHA")
+          echo $sha
+          touch $sha
+          artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar-$version
+          echo "artifact details are $artifact"
+          echo "$artifact" > $(git rev-parse --short "$GITHUB_SHA")
+          
+    - name: ServiceNow Register Artifact
+      uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
+      with:
+          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Register Artifact'
+          artifacts: '[{"name": "${{ env.artifactid }}-${{ env.sha_short }}.jar","version": "${{ env.pomversion}}","semanticVersion": "${{ env.pomversion}}","repositoryName": "${{ github.repository }}"}]'
+   
+    - name: Push to Build Registry
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env: 
+        API_TOKEN_GITHUB: ${{ secrets.Build_REPO_PERSONAL_ACCESS_TOKEN }}   
+      with:
+        # GitHub Action output files
+        source_file: '${{ env.sha_short }}'
+        user_name: 'ArunKumarReddy407'
+        destination_repo: 'ArunKumarReddy407/buildmetadata'
+        destination_folder: 'release/comp3/'
+        #user-email: <your email>
+        # It defaults to `main`
+        #target-branch: "main"
+        commit_message: 'Push artifact1 to Build registry repo'
