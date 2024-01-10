@@ -2,9 +2,11 @@
 
 name: ARTIFACT3 CI GitHub workflow
 
-on: workflow_dispatch
-  # push:
-  #   branches: [ "main" ]
+on: 
+  push:
+   branches: [ "main","feature-test1"]
+  workflow_dispatch:
+   
   # pull_request:
   #   branches: [ "main" ]
   #   types: [opened, synchronize, reopened]
