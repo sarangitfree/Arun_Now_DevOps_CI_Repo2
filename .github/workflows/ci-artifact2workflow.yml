@@ -4,7 +4,7 @@ name: ARTIFACT2 CI GitHub workflow
 
 on: 
   push:
-   branches: [ "feature-test1" ]
+   branches: [ "feature-test1", "feature-test2" ]
   workflow_dispatch:
   # pull_request:
   #   branches: [ "main" ]
@@ -24,7 +24,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean compile
+      run: mvn clean compile --file artifact2/pom.xml 
 
   test:
     name: 'Test'
@@ -34,7 +34,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4.0.0
     - name: Run Tests with Maven
-      run: mvn -B test --file pom.xml 
+      run: mvn -B test --file artifact2/pom.xml 
   publish-job:
     runs-on: ubuntu-latest
     needs: test
@@ -44,9 +44,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - run: mvn --batch-mode --update-snapshots verify
-    - run: mvn test
-    - run: mkdir staging && cp target/*.jar staging && cp target/surefire-reports/*.xml staging
+    - run: mvn --batch-mode --update-snapshots verify --file artifact2/pom.xml 
+    - run: mvn test --file artifact2/pom.xml 
+    - run: mkdir staging && cp artifact2/target/*.jar staging && cp artifact2/target/surefire-reports/*.xml staging
     - uses: actions/upload-artifact@v3
       with:
         name: Package
