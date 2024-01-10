@@ -4,7 +4,7 @@ name: ARTIFACT2 CI GitHub workflow
 
 on: 
   push:
-   branches: [ "main" ]
+   branches: [ "feature-test1" ]
   workflow_dispatch:
   # pull_request:
   #   branches: [ "main" ]
