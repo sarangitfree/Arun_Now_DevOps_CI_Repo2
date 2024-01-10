@@ -58,6 +58,8 @@ jobs:
           echo "pomversion=$(echo $version)" >> "$GITHUB_ENV"
           echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
           echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
+          echo "" > $(git rev-parse --short "$GITHUB_SHA")
+          
     - name: ServiceNow Register Artifact
       uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
       with:
@@ -67,3 +69,18 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Artifact'
           artifacts: '[{"name": "repo1-artifact1-${{ env.branch }}-${{ env.sha_short }}.jar","version": "${{ env.pomversion}}","semanticVersion": "${{ env.pomversion}}","repositoryName": "${{ github.repository }}"}]'
+   
+    - name: Push to Build Registry
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env: 
+        API_TOKEN_GITHUB: ${{ secrets.Build_REPO_PERSONAL_ACCESS_TOKEN }}   
+      with:
+        # GitHub Action output files
+        source_file: '${{ env.sha_short }}'
+        user_name: 'ArunKumarReddy407'
+        destination_repo: 'ArunKumarReddy407/buildmetadata'
+        destination_folder: 'release/comp2/'
+        #user-email: <your email>
+        # It defaults to `main`
+        #target-branch: "main"
+        commit_message: 'Push artifact1 to Build registry repo'
