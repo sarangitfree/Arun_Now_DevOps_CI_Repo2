@@ -4,11 +4,9 @@ name: ARTIFACT2 CI GitHub workflow
 
 on: 
   push:
-   branches: [ "feature-test1", "feature-test2" ]
+   branches: [  "feature-artifact2" ]
   workflow_dispatch:
-  # pull_request:
-  #   branches: [ "main" ]
-  #   types: [opened, synchronize, reopened]
+
 
 jobs:
   build:
