@@ -23,7 +23,7 @@ jobs:
     - name: Build with Maven
       run: |
        echo "artifact=$(echo $(cat release.txt | grep -i comp | cut -d ":" -f2))" >> "$GITHUB_ENV"
-       echo artifact name is $artifact
+       echo artifact name is $env.artifact
       #run: mvn clean compile --file artifact2/pom.xml 
 
   test:
