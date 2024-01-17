@@ -4,9 +4,8 @@ name: ARTIFACT2 CI GitHub workflow
 
 on: 
   push:
-   branches: [  "feature-artifact2" ]
+   branches: [  "feature-*" ]
   workflow_dispatch:
-
 
 jobs:
   build:
@@ -22,7 +21,10 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean compile --file artifact2/pom.xml 
+      run: |
+       echo "artifact=$(echo $(cat release.txt | grep -i comp | cut -d ":" -f2))" >> "$GITHUB_ENV"
+       echo artifact name is $artifact
+      #run: mvn clean compile --file artifact2/pom.xml 
 
   test:
     name: 'Test'
