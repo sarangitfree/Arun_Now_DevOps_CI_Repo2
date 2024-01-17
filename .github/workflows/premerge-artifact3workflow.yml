@@ -39,7 +39,7 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Test'
-          xml-report-filename: target/surefire-reports/testng-results.xml
+          xml-report-filename: artifact3/target/surefire-reports/testng-results.xml
           
   registerartifact:
     name: Register Artifact
