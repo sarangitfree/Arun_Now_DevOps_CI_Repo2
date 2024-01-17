@@ -3,7 +3,7 @@
 name: CI GitHub workflow
 on:
    pull_request:
-     branches: [ "release-artifact" ]
+     branches: [ "release-artifact3" ]
      types: [opened, synchronize, reopened]
 
 jobs:
