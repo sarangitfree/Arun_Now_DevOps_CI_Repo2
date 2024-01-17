@@ -91,7 +91,7 @@ jobs:
       #  source_file: '$artifact'
         user_name: 'ArunKumarReddy407'
         destination_repo: 'ArunKumarReddy407/buildmetadata'
-        destination_folder: 'release/comp2/'
+        destination_folder: 'release/app2/'
         #user-email: <your email>
         # It defaults to `main`
         #target-branch: "main"
