@@ -3,7 +3,7 @@
 name: CI GitHub workflow
 on:
    pull_request:
-     branches: [ "release-artifact" ]
+     branches: [ "release-artifact3" ]
      types: [opened, synchronize, reopened]
 
 jobs:
@@ -50,10 +50,10 @@ jobs:
       uses: actions/checkout@v4.0.0
     - name: Extract Version
       run: |
-          version=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' pom.xml | head -1)
+          version=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' artifact3/pom.xml | head -1)
           echo " Version extrated from pom.xml: $version"
-          name=$(sed -n 's,.*<artifactId>\(.*\)</artifactId.*,\1,p' pom.xml | head -1)
-          echo " artifactid extrated from pom.xml: $name"
+          name=$(sed -n 's,.*<artifactId>\(.*\)</artifactId.*,\1,p' artifact3/pom.xml | head -1)
+          echo " artifactid extrated from artifact3/pom.xml: $name"
           echo "artifactid=$(echo $name)"  >> "$GITHUB_ENV"
           echo "pomversion=$(echo $version)" >> "$GITHUB_ENV"
           echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
