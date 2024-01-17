@@ -48,8 +48,8 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - run: mvn --batch-mode --update-snapshots verify --file artifact2/pom.xml 
-    - run: mvn test --file artifact2/pom.xml 
+    - run: mvn --batch-mode --update-snapshots verify --file artifact3/pom.xml 
+    - run: mvn test --file artifact3/pom.xml 
     - run: mkdir staging && cp artifact3/target/*.jar staging && cp artifact3/target/surefire-reports/*.xml staging
     - uses: actions/upload-artifact@v3
       with:
