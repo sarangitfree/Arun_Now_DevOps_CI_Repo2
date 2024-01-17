@@ -49,3 +49,10 @@ jobs:
       with:
         name: Package
         path: staging
+  deploytodev:
+    name: 'Deploytodev'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run deployment scripts
+      run: echo 'Deployment step in progress...'
