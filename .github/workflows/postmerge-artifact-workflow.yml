@@ -3,9 +3,8 @@
 name: CI GitHub workflow
 
 on: 
-   pull_request:
-     branches: [ "release-artifact2" ]
-     types: [opened, synchronize, reopened]
+  push:
+   branches: [ "release-*" ]
 
 jobs:
   build:
@@ -97,3 +96,10 @@ jobs:
         # It defaults to `main`
         #target-branch: "main"
         commit_message: 'Push artifact2 to Build registry repo'
+  deploytotest:
+    name: 'DeploytoTest'
+    needs: registerartifact
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run deployment scripts
+      run: echo 'Deployment step in progress...'
