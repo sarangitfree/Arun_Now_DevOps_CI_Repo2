@@ -53,7 +53,7 @@ jobs:
         path: staging
   deploytodev:
     name: 'Deploytodev'
-    needs: test
+    needs: publish-job
     runs-on: ubuntu-latest
     steps:
     - name: Run deployment scripts
