@@ -20,7 +20,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean compile --file artifact2/pom.xml 
+      run: mvn clean compile --file artifact3/pom.xml 
 
   test:
     name: 'Test'
@@ -39,7 +39,7 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Test'
-          xml-report-filename: artifact2/target/surefire-reports/testng-results.xml
+          xml-report-filename: artifact3/target/surefire-reports/testng-results.xml
           
   registerartifact:
     name: Register Artifact
