@@ -22,7 +22,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: |
-       module=$(cat release.txt | grep -i comp | cut -d ":" -f2)"
+       module=$(cat release.txt | grep -i comp | cut -d ":" -f2)
        echo "artifact=$(echo $module)" >> "$GITHUB_ENV"
        echo artifact name is $env.artifact
        mvn clean compile --file $env.artifact/pom.xml 
